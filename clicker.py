@@ -1,3 +1,4 @@
+import asyncio
 from random import randint
 from time import sleep
 
@@ -19,12 +20,19 @@ keys = [
 width, height = pyautogui.size()
 middle_x, middle_y = width/2, height/2
 
-l = len(keys) - 1
+async def change_screen():
+    while True:
+        pyautogui.keyDown('shiftleft')
+        pyautogui.keyDown('command')
+        pyautogui.press(']')
+        pyautogui.keyUp('shiftleft')
+        pyautogui.keyUp('command')
+        time_sleep = randint(60, 240)
+        print('Next Tab!!!')
+        await asyncio.sleep(time_sleep)
 
 
-print('Press Ctrl-C to quit')
-
-try:
+async def keyboard_mouse_click():
     while True:
         click = randint(1, 2)
 
@@ -37,6 +45,19 @@ try:
             print('Press %s' % keys[key_num])
 
         time_sleep = randint(1, 3) # randomize sleep time
-        sleep(time_sleep)
+        await asyncio.sleep(time_sleep)
+
+
+l = len(keys) - 1
+
+print('Press Ctrl-C to quit')
+
+try:
+    loop = asyncio.get_event_loop()
+    loop.run_until_complete(asyncio.gather(
+        keyboard_mouse_click(),
+        change_screen()
+    ))
 except KeyboardInterrupt:
+    loop.close()
     print('\nDone')
