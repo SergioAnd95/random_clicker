@@ -13,8 +13,7 @@ keys = [
     'down',
     'left',
     'rigtht',
-    'option',
-    'command'
+    'alt'
 ]
 
 width, height = pyautogui.size()
@@ -22,11 +21,9 @@ middle_x, middle_y = width/2, height/2
 
 async def change_screen():
     while True:
-        pyautogui.keyDown('shiftleft')
-        pyautogui.keyDown('command')
+        pyautogui.keyDown('ctrlleft')
         pyautogui.press(']')
-        pyautogui.keyUp('shiftleft')
-        pyautogui.keyUp('command')
+        pyautogui.keyUp('ctrlleft')
         time_sleep = randint(60, 240)
         print('Next Tab!!!')
         await asyncio.sleep(time_sleep)
